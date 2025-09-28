@@ -161,8 +161,7 @@ function render() {
 
 function takeScreenshot() {
 	init();
-	drinkingBird = drawDrinkingBird();
-	scene.add(drinkingBird);
+	drawDrinkingBird();
 	render();
 	var img1 = renderer.domElement.toDataURL("image/png");
 	camera.position.set( 400, 500, -800 );
@@ -173,8 +172,7 @@ function takeScreenshot() {
 }
 
 init();
-var drinkingBird = drawDrinkingBird();
-scene.add(drinkingBird);
+drawDrinkingBird();
 animate();
 $("body").keydown(function(event) {
 	if (event.which === 80) {
