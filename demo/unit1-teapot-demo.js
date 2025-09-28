@@ -8,7 +8,7 @@ var cameraControls;
 var effectController;
 var clock = new THREE.Clock();
 var teapotSize = 400;
-var ambientLight, light, particleLight;
+var ambientLight, light;
 var tess = -1;	// force initialization
 var bBottom ;
 var bLid;
@@ -92,7 +92,6 @@ function init() {
 
 	scene.add( ambientLight );
 	scene.add( light );
-	scene.add( particleLight );
 
 	// GUI
 	setupGui();
