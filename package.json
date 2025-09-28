@@ -6,5 +6,8 @@
   "scripts": {},
   "dependencies": {
     "three": "^0.106.2"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.22.3"
   }
 }
