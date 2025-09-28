@@ -12,20 +12,27 @@ async function collectDemoScripts() {
 }
 
 async function runDemo(browser, indexHtml, demoPath) {
+  console.log('\n--- Running demo ---');
+  console.log(`${demoPath}`);
+
   const page = await browser.newPage();
   const errors = [];
   const warnings = [];
 
   page.on('console', (message) => {
     const type = message.type();
+    const text = message.text();
     if (type === 'error') {
-      errors.push(message.text());
-    } else if (type === 'warning') {
-      warnings.push(message.text());
+      console.log(`[console:${type}] ${text}`);
+      errors.push(text);
+    } else if (type === 'warn') {
+      console.log(`[console:${type}] ${text}`);
+      warnings.push(text);
     }
   });
 
   page.on('pageerror', (error) => {
+    console.log(`[pageerror] ${error.message}`);
     errors.push(error.message);
   });
 
@@ -34,7 +41,9 @@ async function runDemo(browser, indexHtml, demoPath) {
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
   } catch (error) {
-    errors.push(`Navigation failed: ${error.message}`);
+    const navigationMessage = `Navigation failed: ${error.message}`;
+    console.log(`[navigation-error] ${navigationMessage}`);
+    errors.push(navigationMessage);
   }
 
   await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -58,6 +67,7 @@ async function runDemo(browser, indexHtml, demoPath) {
   await browser.close();
 
   const failed = results.filter(({ errors }) => errors.length > 0);
+  const warned = results.filter(({ warnings }) => warnings.length > 0);
 
   if (failed.length === 0) {
     console.log('All demos loaded without runtime errors.');
@@ -67,6 +77,16 @@ async function runDemo(browser, indexHtml, demoPath) {
       console.log(`- ${demoPath}`);
       for (const error of errors) {
         console.log(`    ${error}`);
+      }
+    }
+  }
+
+  if (warned.length > 0) {
+    console.log('Demos with runtime warnings:');
+    for (const { demoPath, warnings } of warned) {
+      console.log(`- ${demoPath}`);
+      for (const warning of warnings) {
+        console.log(`    ${warning}`);
       }
     }
   }
