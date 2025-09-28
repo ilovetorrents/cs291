@@ -9,7 +9,7 @@ var camera, scene, renderer;
 var cameraControls;
 var ec;
 var clock = new THREE.Clock();
-var light1, light2, light3;
+var light1;
 var ground, lightMesh;
 var angle = 0;
 
@@ -41,7 +41,9 @@ function init() {
 	gm.specular.setRGB(0,0,0);
 	var wire = new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true });
 
-	ground = new THREE.SceneUtils.createMultiMaterialObject(gg, [gm, wire]);
+	ground = new THREE.Group();
+	ground.add( new THREE.Mesh( gg, gm ) );
+	ground.add( new THREE.Mesh( gg, wire ) );
 	//ground = new THREE.Mesh( gg, gm );
 	ground.position.y = -0.1;
 	//ground.add(new THREE.AxisHelper(100));
@@ -128,8 +130,6 @@ function fillScene() {
 
 	// LIGHTS
 	scene.add( light1 );
-	scene.add( light2 );
-	scene.add( light3 );
 
 	scene.add( ground );
 	scene.add(lightMesh);
