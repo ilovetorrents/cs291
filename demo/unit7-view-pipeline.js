@@ -346,8 +346,8 @@ function makeTextSprite( messageList, parameters )
 		parameters.showRect : true ;
 		
 	var canvas = document.createElement('canvas');
-	canvas.width  = 660;
-	canvas.height = 660;
+	canvas.width  = 512;
+	canvas.height = 512;
 	var context = canvas.getContext('2d');
 	context.font = "Bold " + fontsize + "px " + fontface;
     

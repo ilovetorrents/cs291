@@ -51,20 +51,22 @@ function fillScene() {
 
 function setFilters() {
 
-	// MATERIALS
 	for (var name in texture)
 	{
 		if (texture.hasOwnProperty(name)) {
-			texture[name].magFilter = magVal;
-			// turn off minification to show problem
-			texture[name].minFilter = THREE.NearestFilter;
-			texture[name].wrapS = wrapVal; texture[name].wrapT = wrapVal;
-			// if you change filtering, you need to signal that texture needs update
-			texture[name].needsUpdate = true;
+			var tex = texture[name];
+			if (!tex) {
+				continue;
+			}
+			tex.magFilter = magVal;
+			tex.wrapS = wrapVal;
+			tex.wrapT = wrapVal;
+			if (tex.image) {
+				tex.needsUpdate = true;
+			}
 		}
 	}
 }
-
 function SquareGeometry() {
 	var geo = new THREE.Geometry();
 
@@ -86,7 +88,6 @@ function SquareGeometry() {
 	geo.faces.push( new THREE.Face3( 0, 2, 3 ) );
 	geo.faceVertexUvs[ 0 ].push( [ uvs[0], uvs[2], uvs[3] ] );
 
-	// done: return it.
 	return geo;
 }
 

@@ -70,7 +70,7 @@ function setupGui() {
 	gui.add( effectController, "newFlat" ).name("Flat Shading");
 	gui.add( effectController, "newWire" ).name("Show wireframe only");
 }
-var material1 = new THREE.MeshLambertMaterial( { color: 0xFFFF00, shading: THREE.FlatShading } );
+var material1 = new THREE.MeshLambertMaterial( { color: 0xFFFF00, flatShading: true } );
 var ka = 0.4;
 material1.emissive.setRGB( material1.color.r * ka, material1.color.g * ka, material1.color.b * ka );
 var material2 = new THREE.MeshLambertMaterial( { color: 0xFFFF00} );

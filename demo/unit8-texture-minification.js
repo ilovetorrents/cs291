@@ -47,16 +47,22 @@ function setFilters() {
 	for (var name in texture)
 	{
 		if (texture.hasOwnProperty(name)) {
-			texture[name].magFilter = magVal;
-			texture[name].minFilter = minVal;
-			texture[name].anisotropy = anisotropy;
-			texture[name].wrapS = wrapVal; texture[name].wrapT = wrapVal;
+			var tex = texture[name];
+			if (!tex) {
+				continue;
+			}
+			tex.magFilter = magVal;
+			tex.minFilter = minVal;
+			tex.anisotropy = anisotropy;
+			tex.wrapS = wrapVal;
+			tex.wrapT = wrapVal;
 			// if you change filtering, you need to signal that texture needs update
-			texture[name].needsUpdate = true;
+			if (tex.image) {
+				tex.needsUpdate = true;
+			}
 		}
 	}
 }
-
 function SquareGeometry() {
 	var geo = new THREE.Geometry();
 
@@ -245,7 +251,7 @@ function setupGui() {
 	gui.add( effectController, "minification", ['nearest','linear'] ).name("minification");
 	var anisoCount = 1;
 	var anisoList = [];
-	while ( anisoCount <= renderer.getMaxAnisotropy() ) {
+	while ( anisoCount <= renderer.capabilities.getMaxAnisotropy() ) {
 		anisoList.push(anisoCount);
 		anisoCount *= 2;
 	}

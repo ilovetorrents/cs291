@@ -30,7 +30,7 @@ function init() {
 	renderer.gammaOutput = true;
 	renderer.setSize(canvasWidth, canvasHeight);
 	renderer.setClearColor( 0x0, 1.0 );
-	renderer.shadowMapEnabled = true;
+	renderer.shadowMap.enabled = true;
 
 	var container = document.getElementById('container');
 	container.appendChild( renderer.domElement );
@@ -290,7 +290,7 @@ function createTail() {
 			{ map: tailTexture, side: THREE.DoubleSide, transparent: true } ) );
 	// I need the order to be X rotation before Y, so set the order to YZX;
 	// note that, as usual, the order is read right to left.
-	tail.eulerOrder = 'YZX';
+	tail.rotation.order = 'YZX';
 	tail.scale.y = 2;
 	tail.rotation.x = 40.0 * Math.PI / 180;
 	tail.rotation.y = 90.0 * Math.PI / 180;

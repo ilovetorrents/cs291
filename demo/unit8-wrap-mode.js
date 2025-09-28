@@ -51,13 +51,19 @@ function setWrap() {
 	for (var name in texture)
 	{
 		if (texture.hasOwnProperty(name)) {
-			texture[name].wrapS = wrapVal; texture[name].wrapT = wrapVal;
+			var tex = texture[name];
+			if (!tex) {
+				continue;
+			}
+			tex.wrapS = wrapVal;
+			tex.wrapT = wrapVal;
 			// if you change wrap mode, you need to signal that texture needs update
-			texture[name].needsUpdate = true;
+			if (tex.image) {
+				tex.needsUpdate = true;
+			}
 		}
 	}
 }
-
 function SquareGeometry() {
 	var geo = new THREE.Geometry();
 
