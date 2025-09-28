@@ -238,7 +238,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	renderer.setClearColorHex(0xAAAAAA, 1.0);
+	renderer.setClearColor(0xAAAAAA, 1.0);
 
 	container.appendChild(renderer.domElement);
 

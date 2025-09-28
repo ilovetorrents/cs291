@@ -25,7 +25,7 @@ function init() {
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
 	renderer.setSize(canvasWidth, canvasHeight);
-	renderer.setClearColorHex( 0x0, 1.0 );
+	renderer.setClearColor( 0x0, 1.0 );
 
 	var container = document.getElementById('container');
 	container.appendChild( renderer.domElement );
@@ -61,7 +61,8 @@ function fillScene() {
 	scene = new THREE.Scene();
 	//scene.fog = new THREE.FogExp2( 0x000000, 0.0004 );
 
-	var geometry = new THREE.Geometry();
+	var geometry = new THREE.BufferGeometry();
+	var positions = [];
 
 	for ( var i = 0; i < 8000; i ++ ) {
 
@@ -73,17 +74,24 @@ function fillScene() {
 			vertex.z = 2000 * Math.random() - 1000;
 		} while ( vertex.length() > 1000 );
 
-		geometry.vertices.push( vertex );
+		positions.push( vertex.x, vertex.y, vertex.z );
 
 	}
 
-	var disk = THREE.ImageUtils.loadTexture( path + 'media/img/cs291/disc.png' );
-	var material = new THREE.ParticleBasicMaterial(
-		{ size: 35, sizeAttenuation: false, map: disk, transparent: true } );
+	var positionAttribute = new THREE.Float32BufferAttribute( positions, 3 );
+	if ( typeof geometry.setAttribute === 'function' ) {
+		geometry.setAttribute( 'position', positionAttribute );
+	} else {
+		geometry.addAttribute( 'position', positionAttribute );
+	}
+	geometry.computeBoundingSphere();
+
+	var disk = new THREE.TextureLoader().load( path + 'media/img/cs291/disc.png' );
+	var material = new THREE.PointsMaterial(
+		{ size: 35, sizeAttenuation: false, map: disk, transparent: true, depthWrite: false } );
 	material.color.setHSL( 0.9, 0.2, 0.6 );
 
-	var particles = new THREE.ParticleSystem( geometry, material );
-	particles.sortParticles = true;
+	var particles = new THREE.Points( geometry, material );
 	scene.add( particles );
 }
 

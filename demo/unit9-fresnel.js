@@ -46,7 +46,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setSize(canvasWidth, canvasHeight);
-	renderer.setClearColorHex(0xAAAAAA, 1.0);
+	renderer.setClearColor(0xAAAAAA, 1.0);
 
 	container.appendChild(renderer.domElement);
 

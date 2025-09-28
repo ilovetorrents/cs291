@@ -41,7 +41,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.setClearColorHex( 0xAAAAAA, 1.0 );
+	renderer.setClearColor( 0xAAAAAA, 1.0 );
 
 
 	var container = document.getElementById('container');
@@ -58,7 +58,7 @@ function init() {
 	// MATERIAL
 	material = new THREE.MeshLambertMaterial( { color: 0x80fc66 } );
 	var ka = 0.4;
-	material.ambient.setRGB( material.color.r * ka, material.color.g * ka, material.color.b * ka );
+	material.emissive.setRGB( material.color.r * ka, material.color.g * ka, material.color.b * ka );
 
 	sphere = new THREE.Mesh(
 		new THREE.SphereGeometry( 400, 64, 32 ), material );
@@ -117,7 +117,7 @@ function render() {
 	materialColor.setHSL( effectController.Hue, effectController.Saturation, effectController.Lightness * effectController.Kd );
 	material.color.copy( materialColor );
 	materialColor.setHSL( effectController.Hue, effectController.Saturation, effectController.Lightness * effectController.Ka );
-	material.ambient.copy( materialColor );
+	material.emissive.copy( materialColor );
 	
 	renderer.render( scene, camera );
 

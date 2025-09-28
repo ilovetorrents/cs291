@@ -29,7 +29,7 @@ function init() {
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
 	renderer.setSize(canvasWidth, canvasHeight);
-	renderer.setClearColorHex( 0x0, 1.0 );
+	renderer.setClearColor( 0x0, 1.0 );
 	renderer.shadowMapEnabled = true;
 
 	var container = document.getElementById('container');
@@ -113,7 +113,7 @@ function fillScene() {
 	//////////////////////////////
 	// Glass
 	var glass = createGlass(260);
-	glass.position = new THREE.Vector3( -245, 125, 0);
+	glass.position.set(-245, 125, 0);
 	scene.add(glass);
 
 	//////////////////////////////
@@ -180,8 +180,8 @@ function createGlass(height) {
 	glassObject.add(glassMesh);
 
 	var glassWater = new THREE.Mesh( new THREE.CylinderGeometry(120, 100, height, 32), waterMaterial);
-	glassWater.scale = new THREE.Vector3(0.9, 0.85, 0.9);
-	glassWater.position = new THREE.Vector3(0, -10, 0);
+	glassWater.scale.set(0.9, 0.85, 0.9);
+	glassWater.position.set(0, -10, 0);
 	glassObject.add(glassWater);
 	return glassObject;
 }
@@ -192,11 +192,11 @@ function createSupport( bsupport ) {
 	var legMaterial = new THREE.MeshPhongMaterial( { shininess: 4 } );
 	legMaterial.color.setHex( 0xAdA79b );
 	legMaterial.specular.setRGB( 0.5, 0.5, 0.5 );
-	legMaterial.ambient.copy( legMaterial.color );
+	legMaterial.emissive.copy( legMaterial.color );
 
 	var footMaterial = new THREE.MeshPhongMaterial( { color: 0x960f0b, shininess: 30 } );
 	footMaterial.specular.setRGB( 0.5, 0.5, 0.5 );
-	footMaterial.ambient.copy( footMaterial.color );
+	footMaterial.emissive.copy( footMaterial.color );
 
 	// base
 	cube = new THREE.Mesh(
@@ -256,13 +256,13 @@ function createBody(bbody) {
 	var bodyMaterial = new THREE.MeshPhongMaterial( { shininess: 100 } );
 	bodyMaterial.color.setRGB( 31/255, 86/255, 169/255 );
 	bodyMaterial.specular.setRGB( 0.5, 0.5, 0.5 );
-	bodyMaterial.ambient.copy( bodyMaterial.color );
+	bodyMaterial.emissive.copy( bodyMaterial.color );
 
 	var glassMaterial = new THREE.MeshPhongMaterial( { color: 0x0, specular: 0xFFFFFF, shininess: 100, opacity: 0.3, transparent: true } );
-	glassMaterial.ambient.copy( glassMaterial.color );
+	glassMaterial.emissive.copy( glassMaterial.color );
 
 	var crossbarMaterial = new THREE.MeshPhongMaterial( { color: 0x808080, specular: 0xFFFFFF, shininess: 400 } );
-	crossbarMaterial.ambient.copy( crossbarMaterial.color );
+	crossbarMaterial.emissive.copy( crossbarMaterial.color );
 
 	// body
 	sphere = new THREE.Mesh(
@@ -338,17 +338,17 @@ function createHead(bhead) {
 	headMaterial.color.r = 104/255;
 	headMaterial.color.g = 1/255;
 	headMaterial.color.b = 5/255;
-	headMaterial.ambient.copy( headMaterial.color );
+	headMaterial.emissive.copy( headMaterial.color );
 
 	var hatMaterial = new THREE.MeshPhongMaterial( { shininess: 100 } );
 	hatMaterial.color.r = 24/255;
 	hatMaterial.color.g = 38/255;
 	hatMaterial.color.b = 77/255;
 	hatMaterial.specular.setRGB( 0.5, 0.5, 0.5 );
-	hatMaterial.ambient.copy( hatMaterial.color );
+	hatMaterial.emissive.copy( hatMaterial.color );
 
 	var eyeMaterial = new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x303030, shininess: 4 } );
-	eyeMaterial.ambient.copy( eyeMaterial.color );
+	eyeMaterial.emissive.copy( eyeMaterial.color );
 
 	// head
 	sphere = new THREE.Mesh(

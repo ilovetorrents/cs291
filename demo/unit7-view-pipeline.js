@@ -62,6 +62,21 @@ var depthFaceGeometry = [];
 var sideFaceGeometry = [];
 var tipGeometry = [];
 
+if ( !THREE.SpriteAlignment ) {
+	THREE.SpriteAlignment = {
+		topLeft: new THREE.Vector2( 0, 1 ),
+		topCenter: new THREE.Vector2( 0.5, 1 ),
+		topRight: new THREE.Vector2( 1, 1 ),
+		centerLeft: new THREE.Vector2( 0, 0.5 ),
+		center: new THREE.Vector2( 0.5, 0.5 ),
+		centerRight: new THREE.Vector2( 1, 0.5 ),
+		bottomLeft: new THREE.Vector2( 0, 0 ),
+		bottomCenter: new THREE.Vector2( 0.5, 0 ),
+		bottomRight: new THREE.Vector2( 1, 0 )
+	};
+}
+;
+
 function init() 
 {
 	// offscreen render target for viewport's near-frustum rectangle
@@ -95,7 +110,7 @@ function init()
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
 	renderer.setSize(canvasWidth, canvasHeight);
-	renderer.setClearColorHex( clearColor, 1.0 );
+	renderer.setClearColor( clearColor, 1.0 );
 	// don't clear when multiple viewports are drawn
 	renderer.autoClear = false;
 
@@ -205,7 +220,7 @@ function init()
 	////////////
 	
 	var cubeGeometry = new THREE.CubeGeometry( boxSize.x, boxSize.y, boxSize.z );
-	cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xff99ff, ambient: 0xff99ff } );
+	cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xff99ff, emissive: 0xff99ff } );
 	cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
 	cube.position.set(0,boxSize.y/2,0);
 	cube.name = "Cube";
@@ -306,6 +321,20 @@ function makeTextSprite( messageList, parameters )
 
 	var spriteAlignment = parameters.hasOwnProperty("spriteAlignment") ?
 		parameters.spriteAlignment : THREE.SpriteAlignment.topLeft ;
+
+	var alignmentVector = spriteAlignment;
+	if ( typeof alignmentVector === 'string' && THREE.SpriteAlignment.hasOwnProperty(alignmentVector) ) {
+		alignmentVector = THREE.SpriteAlignment[alignmentVector];
+	}
+	if ( alignmentVector && typeof alignmentVector.clone === 'function' ) {
+		alignmentVector = alignmentVector.clone();
+	} else if ( alignmentVector && alignmentVector.x !== undefined && alignmentVector.y !== undefined ) {
+		alignmentVector = new THREE.Vector2( alignmentVector.x, alignmentVector.y );
+	} else if ( THREE.SpriteAlignment && THREE.SpriteAlignment.topLeft ) {
+		alignmentVector = THREE.SpriteAlignment.topLeft.clone();
+	} else {
+		alignmentVector = new THREE.Vector2( 0.5, 0.5 );
+	}
 
 	var textAlignment = parameters.hasOwnProperty("textAlignment") ?
 		parameters.textAlignment : 'left' ;
@@ -437,12 +466,12 @@ function makeTextSprite( messageList, parameters )
 	var texture = new THREE.Texture(canvas);
 	texture.needsUpdate = true;
 
-	var spriteMaterial = new THREE.SpriteMaterial( 
-		{ map: texture, useScreenCoordinates: false, alignment: spriteAlignment } );
+	var spriteMaterial = new THREE.SpriteMaterial( { map: texture } );
 	spriteMaterial.useScreenCoordinates = useScreenCoordinates;
 	spriteMaterial.depthTest = false;
 	spriteMaterial.sizeAttenuation = true;
 	var sprite = new THREE.Sprite( spriteMaterial );
+	sprite.center.copy( alignmentVector );
 
 	var diff = new THREE.Vector3();
 	diff.copy( camera.position );
@@ -1294,7 +1323,7 @@ function render()
 		var borderv = 4/canvasHeight;
 		var margin = 0.00;
 		// background black
-		renderer.setClearColorHex( 0x0, 1.0 );
+		renderer.setClearColor( 0x0, 1.0 );
 		renderer.setScissor( (1.0-margin-viewsize-borderh) * canvasWidth, margin * canvasHeight,
 			(viewsize+borderh) * canvasWidth, (viewsize+borderv) * canvasHeight );
 		renderer.setViewport( (1.0-margin-viewsize-borderh) * canvasWidth, margin * canvasHeight,
@@ -1302,7 +1331,7 @@ function render()
 		renderer.clear();
 
 		// viewport itself
-		renderer.setClearColorHex( clearColor, 1.0 );
+		renderer.setClearColor( clearColor, 1.0 );
 		renderer.setScissor( (1.0-margin-viewsize-borderh/2) * canvasWidth, (margin + borderv/2) * canvasHeight,
 			viewsize * canvasWidth, viewsize * canvasHeight );
 		renderer.setViewport( (1.0-margin-viewsize-borderh/2) * canvasWidth, (margin + borderv/2) * canvasHeight,

@@ -32,7 +32,7 @@ function init() {
 	// RENDERER
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( canvasWidth, canvasHeight );
-	renderer.setClearColorHex( 0xAAAAAA, 1.0 );
+	renderer.setClearColor( 0xAAAAAA, 1.0 );
 
 	var container = document.getElementById('container');
 	container.appendChild( renderer.domElement );
@@ -72,9 +72,9 @@ function setupGui() {
 }
 var material1 = new THREE.MeshLambertMaterial( { color: 0xFFFF00, shading: THREE.FlatShading } );
 var ka = 0.4;
-material1.ambient.setRGB( material1.color.r * ka, material1.color.g * ka, material1.color.b * ka );
+material1.emissive.setRGB( material1.color.r * ka, material1.color.g * ka, material1.color.b * ka );
 var material2 = new THREE.MeshLambertMaterial( { color: 0xFFFF00} );
-material2.ambient.setRGB( material2.color.r * ka, material2.color.g * ka, material2.color.b * ka );
+material2.emissive.setRGB( material2.color.r * ka, material2.color.g * ka, material2.color.b * ka );
 var material3 = new THREE.MeshLambertMaterial( { color: 0xFFFF00, wireframe: true } );
 
 function fillScene() {

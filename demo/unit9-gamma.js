@@ -86,7 +86,7 @@ function init() {
 
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( canvasWidth, canvasHeight );
-	renderer.setClearColorHex( 0xFFFFFF, 1.0 );
+	renderer.setClearColor( 0xFFFFFF, 1.0 );
 	renderer.gammaInput = ec.gammaIn;
 	renderer.gammaOutput = ec.gammaOut;
 
