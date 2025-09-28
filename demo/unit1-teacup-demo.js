@@ -64,12 +64,12 @@ function init() {
 	materialColor.setRGB( 1.0, 0.8, 0.6 );
 	flatGouraudMaterial = createShaderMaterial( "gouraud", light, ambientLight );
 	flatGouraudMaterial.uniforms.uMaterialColor.value.copy( materialColor );
-	flatGouraudMaterial.shading = THREE.FlatShading;
+	flatGouraudMaterial.flatShading = true;
 	flatGouraudMaterial.side = THREE.DoubleSide;
 
 	flatPhongMaterial = createShaderMaterial( "phong", light, ambientLight );
 	flatPhongMaterial.uniforms.uMaterialColor.value.copy( materialColor );
-	flatPhongMaterial.shading = THREE.FlatShading;
+	flatPhongMaterial.flatShading = true;
 	flatPhongMaterial.side = THREE.DoubleSide;
 
 	gouraudMaterial = createShaderMaterial( "gouraud", light, ambientLight );
