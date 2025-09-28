@@ -1,0 +1,10 @@
+{
+  "name": "cs291",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CS291 WebGL exercises and demos",
+  "scripts": {},
+  "dependencies": {
+    "three": "0.56.0"
+  }
+}

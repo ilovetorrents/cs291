@@ -1,2 +1,3 @@
 # OS X ignores
 .DS_Store
+node_modules/
