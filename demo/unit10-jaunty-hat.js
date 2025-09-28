@@ -542,7 +542,7 @@ var Trace = function(npoints,color) {
 	}
 	this.idx = 0;
 
-	this.line = new THREE.Line(this.geom, this.mat, THREE.LinePieces);
+	this.line = new THREE.LineSegments(this.geom, this.mat);
 
 	this.lastPoint = null;
 }
@@ -555,7 +555,7 @@ Trace.prototype = {
 
 		if (this.idx >= this.npoints - 1 ) this.idx = 0;
 
-		// Using LinePieces, each pair of vertices creates a line,
+		// Using LineSegments, each pair of vertices creates a line,
 		// so we need to connect to last vertex. 
 		this.geom.vertices[this.idx].copy(this.lastPoint);
 		this.geom.vertices[this.idx+1].copy(p);

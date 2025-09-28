@@ -51,36 +51,26 @@ function init() {
 	var sizeX = 128;
 	var sizeY = 81;
 
-	geometry = new THREE.Geometry();
+	var planeWidth = sizeX * 2;
+	var planeHeight = sizeY * 2;
 
-	geometry.vertices.push( new THREE.Vector3( -sizeX, -sizeY, 0 ) );
-	geometry.vertices.push( new THREE.Vector3( sizeX, -sizeY, 0 ) );
-	geometry.vertices.push( new THREE.Vector3( sizeX, sizeY, 0 ) );
-	geometry.vertices.push( new THREE.Vector3( -sizeX, sizeY, 0 ) );
-
-	geometry.faces.push( new THREE.Face4( 0, 1, 2, 3 ) );
-
-	geometry.computeFaceNormals();
+	geometry = new THREE.PlaneGeometry( planeWidth, planeHeight, 1, 1 );
 
 	white_ground = new THREE.Mesh( geometry, white_material );
 	white_ground.visible = true;
 
-	// interestingly enough, cannot use instancing here of the geometry;
-	// it appears the material affects how the geometry is stored.
-	geometry = new THREE.Geometry();
+	geometry = new THREE.PlaneGeometry( planeWidth, planeHeight, 1, 1 );
 
-	geometry.vertices.push( new THREE.Vector3( -sizeX, -sizeY, 0 ) );
-	geometry.vertices.push( new THREE.Vector3( sizeX, -sizeY, 0 ) );
-	geometry.vertices.push( new THREE.Vector3( sizeX, sizeY, 0 ) );
-	geometry.vertices.push( new THREE.Vector3( -sizeX, sizeY, 0 ) );
-
-	geometry.faces.push( new THREE.Face4( 0, 1, 2, 3 ) );
-
-	// these actually multiply the color of the material, which is white by default
 	var white = new THREE.Color( 0xFFFFFF );
 	var black = new THREE.Color( 0x000000 );
 
-	geometry.faces[0].vertexColors = [ black, black, white, white ];
+	geometry.faces.forEach( function( face ) {
+		face.vertexColors = [
+			geometry.vertices[ face.a ].x < 0 ? black.clone() : white.clone(),
+			geometry.vertices[ face.b ].x < 0 ? black.clone() : white.clone(),
+			geometry.vertices[ face.c ].x < 0 ? black.clone() : white.clone()
+		];
+	} );
 
 	geometry.computeFaceNormals();
 
