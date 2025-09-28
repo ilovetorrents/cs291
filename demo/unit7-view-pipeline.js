@@ -573,7 +573,7 @@ function createText( force )
 	ptndc.copy(ptvp);
 	ptndc.divideScalar(ptvp.w);
 
-	var windowMatrix = new THREE.Matrix4(
+	var windowMatrix = new THREE.Matrix4().set(
 		canvasWidth/2, 0, 0, canvasWidth/2,
 		0, canvasHeight/2, 0, canvasHeight/2, 
 		0, 0, 0.5, 0.5,
