@@ -27,10 +27,15 @@ function PolygonGeometry(sides) {
 
 		// YOUR CODE HERE
 		//Save the vertex location - fill in the code
+		geo.vertices.push( new THREE.Vector3( x, y, 0 ));
 
 	}
 	// YOUR CODE HERE
 	// Write the code to generate minimum number of faces for the polygon.
+	for (var pt = sides - 1 ; pt > 1; pt--)
+	{
+		geo.faces.push(new THREE.Face3(0, pt - 1, pt));
+	}
 
 	// Return the geometry object
 	return geo;
