@@ -146,8 +146,7 @@ function fillScene() {
 		Coordinates.drawAllAxes({axisLength:300,axisRadius:2,axisTess:50});
 	}
 	createCup();
-	var stairs = createStairs();
-	scene.add(stairs);
+	createStairs();
 }
 //
 
