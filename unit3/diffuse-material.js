@@ -24,7 +24,7 @@ function init() {
 	camera.lookAt(0,0,0);
 	// LIGHTS
 
-	ambientLight = new THREE.AmbientLight( 0xFFFFFF );
+	ambientLight = new THREE.AmbientLight( 0xFFFFFF, 0.4 );
 
 	light = new THREE.DirectionalLight( 0xFFFFFF, 0.7 );
 	light.position.set( -800, 900, 300 );
@@ -45,8 +45,11 @@ function init() {
 
 function createBall() {
 	// Do not change the color itself, change the material and use the ambient and diffuse components.
-	var material = new THREE.MeshBasicMaterial( { color: 0x80FC66, shading: THREE.FlatShading } );
-	var sphere = new THREE.Mesh( new THREE.SphereGeometry( 400, 64, 32 ), material );
+	var geometry = new THREE.SphereBufferGeometry(400, 64, 32);
+	geometry = geometry.toNonIndexed();// duplicate vertices per face
+	geometry.computeVertexNormals(); // normals are now per face
+	var material = new THREE.MeshLambertMaterial( { color: 0x80FC66, flatShading: true } );
+	var sphere = new THREE.Mesh( geometry, material );
 	return sphere;
 }
 
