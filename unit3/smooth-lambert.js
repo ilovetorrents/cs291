@@ -24,7 +24,7 @@ function init() {
 	camera.lookAt(0,0,0);
 	// LIGHTS
 
-	ambientLight = new THREE.AmbientLight( 0xFFFFFF );
+	ambientLight = new THREE.AmbientLight( 0xFFFFFF, 0.4 );
 
 	light = new THREE.DirectionalLight( 0xFFFFFF, 0.7 );
 	light.position.set( -800, 900, 300 );
@@ -48,8 +48,8 @@ function init() {
 
 function createBall() {
 	var material = new THREE.MeshLambertMaterial( { color: 0x80FC66, shading: THREE.FlatShading } );
-	var ka = 0.4;
-	material.ambient.setRGB( material.color.r * ka, material.color.g * ka, material.color.b * ka );
+	//var ka = 0.4;
+	//material.ambient.setRGB( material.color.r * ka, material.color.g * ka, material.color.b * ka );
 	var sphere = new THREE.Mesh(
 		new THREE.SphereGeometry( 400, 64, 32 ), material );
 	return sphere;
