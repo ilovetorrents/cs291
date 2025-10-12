@@ -78,6 +78,10 @@ function fillScene() {
 	var sphere = new THREE.Mesh(
 		new THREE.SphereGeometry( 10, 32, 16 ), hourHandMaterial );
 	sphere.position.y = 18;	// move the hand above the other hand
+	sphere.scale.x = 3;
+	sphere.scale.y = 0.2;
+	sphere.scale.z = 0.2;
+	sphere.rotation.y = 30 * Math.PI / 180
 
 	// YOUR CODE HERE:
 
